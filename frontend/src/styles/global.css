@@ -1,0 +1,11 @@
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "tailwindcss";
+
+@theme {
+  --color-imss-green: #006847;
+  --color-imss-green-dark: #004d33;
+  --color-imss-green-light: #e8f5e9;
+  --font-sans: Inter, system-ui, sans-serif;
+}

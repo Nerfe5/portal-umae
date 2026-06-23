@@ -4,8 +4,16 @@ const cors = require('cors');
 const session = require('express-session');
 const path = require('path');
 
+const documentosRouter = require('./routes/documentos');
+const authRouter = require('./routes/auth');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// Cloudflare Tunnel termina TLS — Express debe confiar en el proxy para cookies seguras
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
 
 app.use(cors({
   origin: process.env.FRONTEND_ORIGIN || 'http://localhost:4321',
@@ -32,10 +40,10 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Rutas — se conectan en Fase 1 y Fase 2
-// const documentosRouter = require('./routes/documentos');
-// const adminRouter = require('./routes/admin');
-// app.use('/api/documentos', documentosRouter);
+app.use('/api/documentos', documentosRouter);
+app.use('/api/auth', authRouter);
+
+// Panel admin — se conecta en Fase 2
 // app.use('/admin', adminRouter);
 
 app.listen(PORT, () => {

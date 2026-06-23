@@ -121,6 +121,7 @@ v<fase>.<iteración>.<parche>
 
 | Versión | Significado                        |
 |---------|------------------------------------|
+| v0.0.1  | Fase 0 completa (scaffolding)      |
 | v0.1.0  | Fase 1 completa (backend base)     |
 | v0.2.0  | Fase 2 completa (panel admin)      |
 | v0.3.0  | Fase 3 completa (portal público)   |

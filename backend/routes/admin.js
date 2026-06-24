@@ -102,7 +102,7 @@ function renderDocRow(doc) {
     <div class="flex-shrink-0 flex items-center gap-1">
       <a href="/uploads/${escapeHtml(doc.filename)}" target="_blank" rel="noopener"
         class="text-xs font-medium px-2 py-1.5 rounded-lg hover:bg-gray-100 transition-colors"
-        style="color:#00723F">Ver</a>
+        style="color:#006847">Ver</a>
       <form id="del-${escapeHtml(doc.id)}" method="POST" action="/admin/panel/delete/${escapeHtml(doc.id)}">
         <button type="button"
           onclick="confirmDelete('${escapeHtml(doc.id)}','${safeName}')"
@@ -140,14 +140,14 @@ function renderPanel(departamentos, flashKey) {
   <script src="https://cdn.tailwindcss.com"><\/script>
   <style>
     body { font-family: system-ui, -apple-system, sans-serif; }
-    .btn-green { background: #00723F; color: #fff; }
-    .btn-green:hover { background: #005a31; }
-    input[type=text]:focus { outline: 2px solid #00723F; outline-offset: 1px; }
+    .btn-green { background: #006847; color: #fff; }
+    .btn-green:hover { background: #004d34; }
+    input[type=text]:focus { outline: 2px solid #006847; outline-offset: 1px; }
   </style>
 </head>
 <body class="min-h-screen bg-gray-50">
 
-  <header style="background:#00723F">
+  <header style="background:#006847">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="1.5">
@@ -180,7 +180,7 @@ function renderPanel(departamentos, flashKey) {
       <div class="lg:col-span-1">
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
           <h2 class="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color:#00723F">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color:#006847">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
             </svg>

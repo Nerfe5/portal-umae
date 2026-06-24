@@ -6,6 +6,7 @@ const path = require('path');
 
 const documentosRouter = require('./routes/documentos');
 const authRouter = require('./routes/auth');
+const adminRouter = require('./routes/admin');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -43,8 +44,7 @@ app.get('/health', (_req, res) => {
 app.use('/api/documentos', documentosRouter);
 app.use('/api/auth', authRouter);
 
-// Panel admin — se conecta en Fase 2
-// app.use('/admin', adminRouter);
+app.use('/admin', adminRouter);
 
 app.listen(PORT, () => {
   console.log(`Portal UMAE backend escuchando en puerto ${PORT}`);

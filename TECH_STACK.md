@@ -12,14 +12,14 @@
 | Fuentes           | **Fontsource** (local)  | según paquete        | Fuentes servidas localmente para no depender de Google Fonts en redes hospitalarias con restricciones.              |
 | Iconos            | **Astro Icon** + Heroicons | astro-icon 1.x   | SVG inline generados en build time, sin dependencia de CDN.                                                        |
 | HTTP (fetch docs) | **Fetch API nativa**    | —                   | El único dato dinámico es la lista de documentos. No se necesita librería adicional.                               |
-| Build             | Astro CLI (`astro build`)| —                  | Produce `dist/` con HTML/CSS/JS optimizados listos para Cloudflare Pages.                                          |
-| Despliegue        | **Cloudflare Pages**    | —                   | Plan gratuito suficiente, CDN global, HTTPS automático, integración directa con Git.                               |
+| Build             | Astro CLI (`astro build`)| —                  | Produce `dist/` con HTML/CSS/JS optimizados. En producción, Express sirve este output como archivos estáticos.     |
+| Despliegue        | **Express static** (producción) | —           | Frontend compilado servido por el backend |
 | Node (dev)        | **Node.js**             | 20 LTS              | Requerido por Astro para el build.                                                                                 |
 
 ### Variables de entorno (frontend)
 
 ```
-PUBLIC_BACKEND_URL=https://backend.portal-umae.workers.dev  # URL pública del backend vía CF Tunnel
+PUBLIC_BACKEND_URL=http://localhost:3001  # Solo en desarrollo
 ```
 
 ---
@@ -32,12 +32,12 @@ PUBLIC_BACKEND_URL=https://backend.portal-umae.workers.dev  # URL pública del b
 | Framework HTTP     | **Express**             | 4.x                 | Minimalista, bien documentado, sin overhead. Suficiente para una API CRUD sencilla.                                   |
 | Subida de archivos | **Multer**              | 1.x                 | Middleware estándar de Express para multipart/form-data. Soporte de filtros por extensión y límite de tamaño.         |
 | Sesión admin       | **express-session**     | 1.x                 | Cookie de sesión server-side para el panel admin. Sin JWT, sin base de datos.                                         |
-| CORS               | **cors**                | 2.x                 | Configuración declarativa de orígenes permitidos. Whitelist del dominio de Cloudflare Pages.                          |
+| CORS               | **cors**                | 2.x                 | Configuración declarativa de orígenes permitidos. En producción, frontend y backend comparten el mismo origen.        |
 | UUID               | **uuid**                | 9.x                 | Generación de IDs únicos para nombres de archivo en disco.                                                            |
 | Validación         | **express-validator**   | 7.x                 | Validación de inputs en endpoints de API (tipo de archivo, nombre, departamento).                                     |
 | Persistencia       | **JSON file** (nativo)  | —                   | `documentos.json` gestionado con `fs.promises`. Sin base de datos — requisito del brief.                              |
 | Contenedor         | **Docker + Compose**    | Docker 24.x         | Aísla el backend del resto del servidor. Facilita arranque, parada y actualización sin tocar el sistema host.         |
-| Despliegue         | **Cloudflare Tunnel**   | cloudflared latest  | Expone el backend al exterior sin abrir puertos en el firewall hospitalario.                                          |
+| Despliegue         | **Docker Compose + Nginx** | Docker 24.x      | Nginx en puerto 80, Express en 3001 |
 | Variables de entorno | **dotenv**            | 16.x                | Carga `.env` en desarrollo. En producción, se inyectan directamente en Docker Compose.                                |
 
 ### Variables de entorno (backend)
@@ -46,7 +46,7 @@ PUBLIC_BACKEND_URL=https://backend.portal-umae.workers.dev  # URL pública del b
 PORT=3001                          # Puerto del servidor Express
 ADMIN_PASSWORD=contraseña_segura   # Contraseña única del panel admin
 SESSION_SECRET=cadena_aleatoria    # Secreto para firmar cookies de sesión
-FRONTEND_ORIGIN=https://portal-umae.pages.dev  # Origen permitido en CORS
+FRONTEND_ORIGIN=http://localhost  # IP del servidor en producción
 UPLOADS_DIR=./uploads              # Ruta de almacenamiento de archivos
 ```
 

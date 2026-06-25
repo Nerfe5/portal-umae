@@ -2,78 +2,122 @@
 
 Portal institucional del UMAE Hospital de Especialidades IMSS Puebla.
 
-## Estructura
+## Arquitectura — Servidor Linux (Ubuntu 24.04 LTS)
+
+```
+│
+├── Docker Compose
+│   ├── nginx (puerto 80) — proxy reverso
+│   └── backend Express (puerto 3001)
+│       ├── /api/documentos — API REST
+│       ├── /admin          — panel de administración
+│       ├── /uploads        — archivos estáticos
+│       └── /               — frontend Astro compilado
+│
+├── Volúmenes persistentes
+│   ├── backend/uploads/        — documentos subidos
+│   └── backend/documentos.json — metadatos
+│
+└── Red local del hospital (acceso por IP o hostname)
+```
+
+## Estructura del repositorio
 
 ```
 portal-umae/
-├── frontend/          # Astro + Tailwind — portal público → Cloudflare Pages
-├── backend/           # Express — API REST + panel admin → servidor hospitalario
-└── docker-compose.yml # Solo para el backend
+├── frontend/          # Astro 7 + Tailwind 4 — portal público
+├── backend/           # Express — API REST + panel admin
+├── nginx/             # Configuración del proxy reverso
+│   └── nginx.conf
+└── docker-compose.yml # Orquestación completa
 ```
 
-## Requisitos
+## Desarrollo local
+
+### Requisitos
 
 - Node.js 20 LTS
 - npm 10.x
-- Docker + Docker Compose (producción del backend)
-
-## Desarrollo local
 
 ### Backend
 
 ```bash
 cd backend
-cp .env.example .env   # editar con valores reales
+cp .env.example .env   # editar ADMIN_PASSWORD y SESSION_SECRET
 npm install
 npm run dev            # http://localhost:3001
-```
-
-Verificar que el servidor responde:
-
-```bash
-curl http://localhost:3001/health
 ```
 
 ### Frontend
 
 ```bash
 cd frontend
-cp .env.example .env   # editar PUBLIC_BACKEND_URL
+cp .env.example .env   # PUBLIC_BACKEND_URL=http://localhost:3001
 npm install
 npm run dev            # http://localhost:4321
 ```
 
-## Producción
+## Producción — despliegue en servidor
 
-### Backend — servidor hospitalario
+### Prerrequisitos en el servidor
+
+- Ubuntu 24.04 LTS
+- Docker Engine 24.x
+- Docker Compose v2
+
+### Pasos
 
 ```bash
-# 1. Copiar y editar variables de entorno
+# 1. Clonar el repositorio
+git clone https://github.com/Nerfe5/portal-umae.git
+cd portal-umae
+
+# 2. Configurar variables de entorno
 cp backend/.env.example backend/.env
+nano backend/.env   # editar ADMIN_PASSWORD y SESSION_SECRET
 
-# 2. Levantar con Docker Compose
-docker compose up -d
+# 3. Levantar con Docker Compose
+docker compose up -d --build
 
-# 3. Ver logs
-docker compose logs -f backend
+# 4. Verificar que todo está en línea
+curl http://localhost/health
 ```
 
-### Frontend — Cloudflare Pages
+### Comandos útiles
 
-Conectar el repositorio con la siguiente configuración:
+```bash
+# Ver logs en tiempo real
+docker compose logs -f
 
-| Campo              | Valor                                            |
-|--------------------|--------------------------------------------------|
-| Build command      | `cd frontend && npm install && npm run build`    |
-| Build output       | `frontend/dist`                                  |
-| Var. de entorno    | `PUBLIC_BACKEND_URL=https://<url-cf-tunnel>`     |
+# Reiniciar tras cambios en .env
+docker compose down && docker compose up -d
+
+# Actualizar a nueva versión
+git pull origin main
+docker compose up -d --build
+
+# Hacer backup de datos
+cp backend/documentos.json documentos.json.bak
+cp -r backend/uploads/ uploads.bak/
+```
 
 ## Variables de entorno
 
-| Archivo                   | Variables                                      |
-|---------------------------|------------------------------------------------|
-| `backend/.env.example`    | PORT, ADMIN_PASSWORD, SESSION_SECRET, FRONTEND_ORIGIN |
-| `frontend/.env.example`   | PUBLIC_BACKEND_URL                             |
+### backend/.env
+
+| Variable         | Descripción                          | Ejemplo                        |
+|------------------|--------------------------------------|--------------------------------|
+| PORT             | Puerto interno de Express            | 3001                           |
+| ADMIN_PASSWORD   | Contraseña del panel admin           | contraseña_segura              |
+| SESSION_SECRET   | Secreto para firmar cookies          | cadena_aleatoria_32_caracteres |
+| FRONTEND_ORIGIN  | Origen permitido en CORS (dev)       | http://localhost               |
+| NODE_ENV         | Entorno de ejecución                 | production                     |
+
+### frontend/.env (solo desarrollo)
+
+| Variable            | Descripción                     | Ejemplo                    |
+|---------------------|---------------------------------|----------------------------|
+| PUBLIC_BACKEND_URL  | URL del backend en desarrollo   | http://localhost:3001      |
 
 ## Documentación
 

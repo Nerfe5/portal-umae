@@ -2,8 +2,9 @@
 
 ## Visión general
 
-Portal institucional del UMAE Hospital de Especialidades IMSS Puebla.
-Dos componentes independientes: frontend estático en Cloudflare Pages y backend Express en servidor hospitalario expuesto vía Cloudflare Tunnel.
+Portal institucional de red local. Frontend Astro compilado y servido
+por el mismo backend Express. Todo en un único servidor Linux
+(Dell PowerEdge T130) accesible exclusivamente desde la red del hospital.
 
 ---
 
@@ -79,21 +80,26 @@ Dos componentes independientes: frontend estático en Cloudflare Pages y backend
 
 ---
 
-## Fase 4 — Integración y despliegue (Semana 3–4)
+## Fase 4 — Integración y despliegue en red local (Semana 3–4)
 
-**Objetivo:** Ambos servicios funcionando en producción con sus respectivas plataformas.
+**Objetivo:** Portal completo funcionando en servidor Linux local
+accesible desde la red del hospital. Sin dependencias de servicios
+externos.
 
 ### Hitos
-- [ ] Backend desplegado en servidor hospitalario vía Docker Compose
-- [ ] Puerto sin conflicto con SIGEB verificado
-- [ ] Cloudflare Tunnel apuntando al backend
-- [ ] CORS de producción apuntando al dominio de Cloudflare Pages
-- [ ] Frontend publicado en Cloudflare Pages (build de Astro)
-- [ ] Variable de entorno `PUBLIC_BACKEND_URL` configurada en Cloudflare Pages
-- [ ] Prueba end-to-end: subir documento desde admin → verlo en portal público
-- [ ] Prueba en móvil y tablet
+- [ ] Build de Astro integrado en Dockerfile multi-stage
+- [ ] Express sirve el frontend compilado en producción
+- [ ] Nginx configurado como proxy reverso en puerto 80
+- [ ] Docker Compose orquesta backend + nginx en un solo comando
+- [ ] Prueba de validación en red WiFi externa con ngrok
+- [ ] Ubuntu Server 24.04 instalado en Dell PowerEdge T130
+- [ ] Docker instalado y configurado en el servidor
+- [ ] Portal desplegado y accesible desde la red local del hospital
+- [ ] Arranque automático con el servidor (restart: unless-stopped)
+- [ ] Prueba end-to-end: subir documento → verlo en portal público
+- [ ] Prueba en móvil y tablet desde la red del hospital
 
-**Estimación:** 2–3 días
+**Estimación:** 3–4 días
 
 ---
 

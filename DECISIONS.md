@@ -65,29 +65,51 @@ Registro de decisiones técnicas arquitectónicas (ADR simplificados).
 
 ---
 
-## ADR-005 — Cloudflare Tunnel para exponer el backend
+## ADR-005 — Despliegue en red local sin exposición a internet
 
-**Decisión:** Usar `cloudflared` para crear un túnel desde el servidor hospitalario a Cloudflare, evitando abrir puertos en el firewall.
+**Decisión:** El portal opera exclusivamente en la red local del
+hospital. No se usa Cloudflare Tunnel ni ningún servicio de exposición
+pública.
+
+**Contexto:** La dirección del hospital decidió que el portal sea
+de acceso interno únicamente. No se requiere acceso desde internet.
 
 **Alternativas descartadas:**
-- **Abrir puerto en firewall del hospital** — Requiere aprobación del área de TI del IMSS, puede no ser posible por políticas institucionales.
-- **Reverse proxy con dominio propio** — Requiere IP pública estática y gestión de SSL.
-- **ngrok** — Plan gratuito con limitaciones de ancho de banda y URLs aleatorias que cambian.
+- **Cloudflare Tunnel** — Ya no aplica; el portal no necesita
+  ser accesible desde internet.
+- **VPN** — Añade complejidad de configuración para los usuarios
+  finales dentro del hospital.
+- **Puerto abierto en firewall** — Innecesario si no hay acceso
+  externo requerido.
 
-**Justificación:** El hospital ya tiene `cloudflared` en uso (según el brief). Cloudflare Tunnel es seguro (el tráfico siempre sale del servidor hacia Cloudflare, nunca entra desde fuera), gratuito en el plan actual y no requiere cambios en el firewall.
+**Justificación:** La red local del hospital es el entorno natural
+para un portal de uso interno. Elimina dependencias de servicios
+externos, reduce la superficie de ataque y simplifica la
+configuración. El acceso se hace por IP local o nombre de host
+en la red hospitalaria.
 
 ---
 
-## ADR-006 — Docker Compose solo para el backend
+## ADR-006 — Contenedor único: Express sirve frontend y backend
 
-**Decisión:** El backend corre en un contenedor Docker Compose. El frontend no se dockeriza.
+**Decisión:** El frontend Astro se compila en build time y Express
+lo sirve como archivos estáticos. Un solo contenedor Docker maneja
+todo el portal.
 
 **Alternativas descartadas:**
-- **Dockerizar también el frontend** — El frontend es estático y se despliega en Cloudflare Pages. Dockerizarlo solo añade un paso innecesario.
-- **Sin Docker (Node directo)** — Corre en el mismo proceso del sistema operativo del servidor. Conflictos de versión de Node con otras aplicaciones, sin aislamiento de puertos ni entorno.
-- **Kubernetes** — Completamente sobredimensionado para una sola aplicación en un servidor.
+- **Dos contenedores separados (Nginx + Express)** — Para este
+  volumen de tráfico (red local, decenas de usuarios) es
+  sobredimensionado. Un solo proceso Express es suficiente.
+- **Nginx sirviendo el frontend directamente** — Requiere montar
+  el dist de Astro en el contenedor de Nginx y coordinar dos
+  servicios para algo que Express puede hacer en una línea.
+- **Sin Docker** — Sin aislamiento, conflictos potenciales con
+  SIGEB u otras aplicaciones del servidor.
 
-**Justificación:** Docker Compose permite definir el puerto, las variables de entorno y los volúmenes en un archivo versionado. Facilita reinicios, actualizaciones y el aislamiento de Node.js respecto al resto del servidor (donde corre SIGEB).
+**Justificación:** Un Dockerfile multi-stage compila Astro y copia
+el resultado a la imagen de Express. Un solo `docker compose up`
+levanta todo. Nginx actúa únicamente como proxy reverso en el
+puerto 80 para no requerir que Docker corra como root.
 
 ---
 

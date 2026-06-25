@@ -6,32 +6,26 @@
 
 ```mermaid
 graph TB
-    subgraph "Usuario final (público / personal IMSS)"
-        Browser["Navegador web"]
+    subgraph "Red local del hospital"
+        Browser["Navegador web\n(personal IMSS)"]
     end
 
-    subgraph "Cloudflare (edge)"
-        CF_Pages["Cloudflare Pages\nfrontend estático\n(Astro build)"]
-        CF_Tunnel["Cloudflare Tunnel\nexpose backend"]
-    end
-
-    subgraph "Servidor hospitalario"
-        Backend["Backend Express\n:3001\n/api/documentos\n/uploads\n/admin"]
+    subgraph "Servidor Linux — Dell PowerEdge T130"
+        Nginx["Nginx\npuerto 80\nproxy reverso"]
+        Backend["Backend Express\n:3001\n/api/documentos\n/uploads\n/admin\n/ (Astro dist)"]
         JSON_Store[("documentos.json\nmetadatos")]
         FS["Sistema de archivos\n/uploads/\nPDF, Word, Excel"]
         SIGEB["SIGEB\n(otro puerto)"]
     end
 
-    Browser -->|"HTTPS"| CF_Pages
-    CF_Pages -->|"fetch() HTTPS\npúblico"| CF_Tunnel
-    CF_Tunnel -->|"HTTP local"| Backend
+    Browser -->|"HTTP puerto 80"| Nginx
+    Nginx -->|"proxy_pass"| Backend
     Backend <-->|"leer/escribir"| JSON_Store
     Backend <-->|"leer/escribir"| FS
     Backend -.->|"mismo servidor\npuerto diferente"| SIGEB
 
-    style CF_Pages fill:#f4f4f4,stroke:#006847
+    style Nginx fill:#fff3e0,stroke:#e65100
     style Backend fill:#e8f5e9,stroke:#006847
-    style CF_Tunnel fill:#fff3e0,stroke:#e65100
 ```
 
 ---
@@ -152,18 +146,18 @@ graph LR
         Dev_BE["backend/\nnode index.js\n:3001"]
     end
 
-    subgraph "CI — no existe aún"
-        CI["—"]
+    subgraph "Producción — servidor hospitalario"
+        Docker["Docker Compose"]
+        Nginx_P["Nginx :80"]
+        Express_P["Express :3001\n+ Astro dist"]
     end
 
-    subgraph "Producción"
-        Prod_FE["Cloudflare Pages\nbuild Astro estático"]
-        Prod_BE["Docker Compose\nen servidor hospitalario\n:3001"]
-    end
+    Dev_FE -->|"astro build\n(incluido en Dockerfile)"| Express_P
+    Dev_BE -->|"docker compose up --build"| Docker
+    Docker --> Nginx_P
+    Docker --> Express_P
+    Nginx_P -->|"proxy_pass"| Express_P
 
-    Dev_FE -->|"astro build + push"| Prod_FE
-    Dev_BE -->|"docker compose up"| Prod_BE
-
-    style Prod_FE fill:#f4f4f4,stroke:#006847
-    style Prod_BE fill:#e8f5e9,stroke:#006847
+    style Express_P fill:#e8f5e9,stroke:#006847
+    style Nginx_P fill:#fff3e0,stroke:#e65100
 ```

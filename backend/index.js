@@ -11,7 +11,7 @@ const adminRouter = require('./routes/admin');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Cloudflare Tunnel termina TLS — Express debe confiar en el proxy para cookies seguras
+// Nginx termina las peticiones — Express confía en el proxy para headers correctos
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
 }

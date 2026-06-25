@@ -37,6 +37,9 @@ app.use(session({
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Sirve el build estático de Astro
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'dist')));
+
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
@@ -45,6 +48,11 @@ app.use('/api/documentos', documentosRouter);
 app.use('/api/auth', authRouter);
 
 app.use('/admin', adminRouter);
+
+// Catch-all: cualquier ruta no reconocida devuelve el index.html de Astro
+app.get('*', (_req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'dist', 'index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`Portal UMAE backend escuchando en puerto ${PORT}`);

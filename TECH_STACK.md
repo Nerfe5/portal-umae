@@ -13,13 +13,13 @@
 | Iconos            | **Astro Icon** + Heroicons | astro-icon 1.x   | SVG inline generados en build time, sin dependencia de CDN.                                                        |
 | HTTP (fetch docs) | **Fetch API nativa**    | —                   | El único dato dinámico es la lista de documentos. No se necesita librería adicional.                               |
 | Build             | Astro CLI (`astro build`)| —                  | Produce `dist/` con HTML/CSS/JS optimizados listos para Cloudflare Pages.                                          |
-| Despliegue        | **Cloudflare Pages**    | —                   | Plan gratuito suficiente, CDN global, HTTPS automático, integración directa con Git.                               |
+| Despliegue        | **Express static** (producción) | —           | Frontend compilado servido por el backend |
 | Node (dev)        | **Node.js**             | 20 LTS              | Requerido por Astro para el build.                                                                                 |
 
 ### Variables de entorno (frontend)
 
 ```
-PUBLIC_BACKEND_URL=https://backend.portal-umae.workers.dev  # URL pública del backend vía CF Tunnel
+PUBLIC_BACKEND_URL=http://localhost:3001  # Solo en desarrollo
 ```
 
 ---
@@ -37,7 +37,7 @@ PUBLIC_BACKEND_URL=https://backend.portal-umae.workers.dev  # URL pública del b
 | Validación         | **express-validator**   | 7.x                 | Validación de inputs en endpoints de API (tipo de archivo, nombre, departamento).                                     |
 | Persistencia       | **JSON file** (nativo)  | —                   | `documentos.json` gestionado con `fs.promises`. Sin base de datos — requisito del brief.                              |
 | Contenedor         | **Docker + Compose**    | Docker 24.x         | Aísla el backend del resto del servidor. Facilita arranque, parada y actualización sin tocar el sistema host.         |
-| Despliegue         | **Cloudflare Tunnel**   | cloudflared latest  | Expone el backend al exterior sin abrir puertos en el firewall hospitalario.                                          |
+| Despliegue         | **Docker Compose + Nginx** | Docker 24.x      | Nginx en puerto 80, Express en 3001 |
 | Variables de entorno | **dotenv**            | 16.x                | Carga `.env` en desarrollo. En producción, se inyectan directamente en Docker Compose.                                |
 
 ### Variables de entorno (backend)
@@ -46,7 +46,7 @@ PUBLIC_BACKEND_URL=https://backend.portal-umae.workers.dev  # URL pública del b
 PORT=3001                          # Puerto del servidor Express
 ADMIN_PASSWORD=contraseña_segura   # Contraseña única del panel admin
 SESSION_SECRET=cadena_aleatoria    # Secreto para firmar cookies de sesión
-FRONTEND_ORIGIN=https://portal-umae.pages.dev  # Origen permitido en CORS
+FRONTEND_ORIGIN=http://localhost  # IP del servidor en producción
 UPLOADS_DIR=./uploads              # Ruta de almacenamiento de archivos
 ```
 

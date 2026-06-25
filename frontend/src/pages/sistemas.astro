@@ -1,0 +1,135 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const sistemas = [
+  {
+    nombre: 'SIGEB',
+    descripcion: 'Sistema de Gestión de Bienes y Servicios',
+    href: '#',
+    icono: `<path stroke-linecap="round" stroke-linejoin="round"
+      d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25
+         m0-9v9"/>`,
+  },
+  {
+    nombre: 'HIS',
+    descripcion: 'Sistema de Información Hospitalaria',
+    href: '#',
+    icono: `<path stroke-linecap="round" stroke-linejoin="round"
+      d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75
+         C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75
+         8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25
+         c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625z
+         M16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75
+         c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>`,
+  },
+  {
+    nombre: 'IMSS Digital',
+    descripcion: 'Portal de servicios digitales del IMSS',
+    href: '#',
+    icono: `<path stroke-linecap="round" stroke-linejoin="round"
+      d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25
+         2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3
+         0h3m-3 18.75h3"/>`,
+  },
+  {
+    nombre: 'Correo Institucional',
+    descripcion: 'Acceso al correo electrónico institucional',
+    href: '#',
+    icono: `<path stroke-linecap="round" stroke-linejoin="round"
+      d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75
+         m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25
+         2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0
+         01-1.07-1.916V6.75"/>`,
+  },
+  {
+    nombre: 'Intranet IMSS',
+    descripcion: 'Red interna de información y comunicación',
+    href: '#',
+    icono: `<path stroke-linecap="round" stroke-linejoin="round"
+      d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12
+         21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515
+         3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686
+         0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959
+         0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162
+         0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/>`,
+  },
+  {
+    nombre: 'Sistema de Nómina',
+    descripcion: 'Consulta y gestión de nómina del personal',
+    href: '#',
+    icono: `<path stroke-linecap="round" stroke-linejoin="round"
+      d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75
+         M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25
+         M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504
+         1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75
+         .75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75
+         0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12
+         0h.008v.008H6V10.5z"/>`,
+  },
+];
+---
+
+<Layout title="Sistemas institucionales">
+
+  <!-- Hero -->
+  <section class="py-16 px-4 text-center text-white" style="background:#006847">
+    <p class="text-sm" style="opacity:0.75">
+      <a href="/" class="hover:underline">Inicio</a> · Sistemas institucionales
+    </p>
+    <h1 class="text-3xl md:text-4xl font-bold mt-2">Sistemas institucionales</h1>
+    <p class="mt-2" style="opacity:0.8">Acceso directo a los sistemas del IMSS</p>
+  </section>
+
+  <!-- Grid de sistemas -->
+  <section class="bg-white py-16 px-4">
+    <div class="max-w-5xl mx-auto">
+      <p class="text-gray-600 mb-10 max-w-2xl">
+        Accede a los sistemas institucionales del IMSS. Si tienes problemas para ingresar,
+        contacta al área de soporte técnico de tu unidad.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {sistemas.map(({ nombre, descripcion, href, icono }) => (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener"
+            class="border border-gray-200 rounded-xl p-6 shadow-sm flex flex-col gap-3
+                   hover:shadow-md hover:border-imss-green transition-all"
+          >
+            <div class="flex items-center gap-3">
+              <svg class="w-8 h-8 flex-shrink-0" fill="none" stroke="#006847"
+                viewBox="0 0 24 24" stroke-width="1.5"
+                set:html={icono}
+              />
+              <span class="font-semibold text-gray-800">{nombre}</span>
+            </div>
+            <p class="text-sm text-gray-500 flex-1">{descripcion}</p>
+            <p class="text-sm font-medium" style="color:#006847">Abrir sistema →</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Aviso -->
+  <section class="bg-gray-50 py-10 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-5 flex items-start gap-3">
+        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="#d97706"
+          viewBox="0 0 24 24" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0
+               2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898
+               0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+        </svg>
+        <p class="text-sm text-yellow-800">
+          Los enlaces a sistemas institucionales son de uso exclusivo para personal
+          autorizado del IMSS. El acceso no autorizado está prohibido y puede tener
+          consecuencias legales.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</Layout>

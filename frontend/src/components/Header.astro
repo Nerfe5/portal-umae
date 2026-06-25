@@ -1,0 +1,94 @@
+---
+const pathname = Astro.url.pathname;
+
+const links = [
+  { label: 'Inicio',          href: '/' },
+  { label: 'Quiénes somos',   href: '/quienes-somos' },
+  { label: 'Misión y Visión', href: '/mision-vision' },
+  { label: 'Sistemas',        href: '/sistemas' },
+  { label: 'Documentos',      href: '/documentos' },
+  { label: 'Contacto',        href: '/contacto' },
+];
+
+function isActive(href: string) {
+  return href === '/' ? pathname === '/' : pathname.startsWith(href);
+}
+---
+
+<header class="sticky top-0 z-50">
+
+  <!-- Franja superior -->
+  <div class="py-1.5 text-center" style="background:#006847">
+    <span class="text-xs text-white">IMSS · Instituto Mexicano del Seguro Social</span>
+  </div>
+
+  <!-- Franja principal -->
+  <div class="bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
+
+      <!-- Identidad -->
+      <a href="/" class="flex flex-col leading-tight">
+        <span class="font-bold text-2xl" style="color:#006847">IMSS</span>
+        <span class="text-xs text-gray-500">UMAE Hospital de Especialidades · Puebla</span>
+      </a>
+
+      <!-- Nav desktop -->
+      <nav class="hidden md:flex items-center gap-6">
+        {links.map(({ label, href }) => (
+          <a
+            href={href}
+            class={`text-sm transition-colors ${
+              isActive(href)
+                ? 'text-imss-green font-semibold border-b-2 border-imss-green pb-0.5'
+                : 'text-gray-600 hover:text-imss-green'
+            }`}
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Botón hamburger móvil -->
+      <button
+        id="menu-btn"
+        class="md:hidden p-2 rounded-md"
+        aria-label="Abrir menú"
+        type="button"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="#006847" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6"  x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Menú móvil -->
+  <div id="mobile-menu" class="hidden bg-white border-t border-gray-100 md:hidden">
+    {links.map(({ label, href }) => (
+      <a
+        href={href}
+        class={`block py-3 px-4 text-sm border-b border-gray-100 transition-colors ${
+          isActive(href)
+            ? 'text-imss-green font-semibold bg-imss-green-light'
+            : 'text-gray-700 hover:text-imss-green hover:bg-imss-green-light'
+        }`}
+      >
+        {label}
+      </a>
+    ))}
+  </div>
+
+</header>
+
+<script>
+  const btn = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn!.addEventListener('click', () => menu!.classList.toggle('hidden'));
+  menu!.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => menu!.classList.add('hidden'))
+  );
+</script>

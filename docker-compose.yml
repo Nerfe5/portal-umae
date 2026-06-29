@@ -9,7 +9,7 @@ services:
       - ./backend/.env
     volumes:
       - ./backend/uploads:/app/uploads
-      - ./backend/documentos.json:/app/documentos.json
+      - ./backend/documentos.json:/app/documentos.json:rw
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:3001/health"]

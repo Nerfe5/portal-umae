@@ -19,9 +19,7 @@ async function readDocumentos() {
 
 // Escribe de forma atómica: tmp → rename, evita corrupción ante fallo de proceso
 async function writeDocumentos(data) {
-  const tmp = FILE_PATH + '.tmp';
-  await fs.writeFile(tmp, JSON.stringify(data, null, 2), 'utf8');
-  await fs.rename(tmp, FILE_PATH);
+  await fs.writeFile(FILE_PATH, JSON.stringify(data, null, 2), 'utf8');
 }
 
 function agruparPorDepartamento(documentos) {

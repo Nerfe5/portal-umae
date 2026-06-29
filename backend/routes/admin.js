@@ -159,15 +159,15 @@ function renderPanel(departamentos, flashKey) {
           <span class="hidden sm:inline text-sm ml-1.5" style="color:rgba(255,255,255,0.65)">· Portal UMAE</span>
         </div>
       </div>
-      <form method="POST" action="/admin/logout">
-        <button type="submit"
-          class="text-sm px-3 py-1.5 rounded-lg transition-colors"
-          style="color:rgba(255,255,255,0.85);border:1px solid rgba(255,255,255,0.35)"
-          onmouseover="this.style.background='rgba(255,255,255,0.12)'"
-          onmouseout="this.style.background='transparent'">
-          Cerrar sesión
-        </button>
-      </form>
+      <button
+        type="button"
+        onclick="if(confirm('¿Cerrar sesión?\\nSerás redirigido al portal de documentos.')) { fetch('/admin/logout', { method: 'POST', credentials: 'include' }).then(() => window.location.href = '/documentos'); }"
+        class="text-sm px-3 py-1.5 rounded-lg transition-colors"
+        style="color:rgba(255,255,255,0.85);border:1px solid rgba(255,255,255,0.35)"
+        onmouseover="this.style.background='rgba(255,255,255,0.12)'"
+        onmouseout="this.style.background='transparent'">
+        Cerrar sesión
+      </button>
     </div>
   </header>
 
@@ -321,7 +321,7 @@ router.post('/panel/delete/:id', requireAuthWeb, async (req, res) => {
 
 // POST /admin/logout
 router.post('/logout', (req, res) => {
-  req.session.destroy(() => res.redirect('/admin/login'));
+  req.session.destroy(() => res.redirect('/documentos'));
 });
 
 module.exports = router;

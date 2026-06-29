@@ -2,71 +2,40 @@
 import Layout from '../layouts/Layout.astro';
 
 const sistemas = [
-  {
-    nombre: 'SIGEB',
-    descripcion: 'Sistema de Gestión de Bienes y Servicios',
-    href: '#',
-    icono: `<path stroke-linecap="round" stroke-linejoin="round"
-      d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25
-         m0-9v9"/>`,
-  },
-  {
-    nombre: 'HIS',
-    descripcion: 'Sistema de Información Hospitalaria',
-    href: '#',
-    icono: `<path stroke-linecap="round" stroke-linejoin="round"
-      d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75
-         C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75
-         8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25
-         c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625z
-         M16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75
-         c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>`,
-  },
-  {
-    nombre: 'IMSS Digital',
-    descripcion: 'Portal de servicios digitales del IMSS',
-    href: '#',
-    icono: `<path stroke-linecap="round" stroke-linejoin="round"
-      d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25
-         2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3
-         0h3m-3 18.75h3"/>`,
-  },
-  {
-    nombre: 'Correo Institucional',
-    descripcion: 'Acceso al correo electrónico institucional',
-    href: '#',
-    icono: `<path stroke-linecap="round" stroke-linejoin="round"
-      d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75
-         m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25
-         2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0
-         01-1.07-1.916V6.75"/>`,
-  },
-  {
-    nombre: 'Intranet IMSS',
-    descripcion: 'Red interna de información y comunicación',
-    href: '#',
-    icono: `<path stroke-linecap="round" stroke-linejoin="round"
-      d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12
-         21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515
-         3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686
-         0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959
-         0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162
-         0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/>`,
-  },
-  {
-    nombre: 'Sistema de Nómina',
-    descripcion: 'Consulta y gestión de nómina del personal',
-    href: '#',
-    icono: `<path stroke-linecap="round" stroke-linejoin="round"
-      d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75
-         M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25
-         M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504
-         1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75
-         .75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75
-         0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12
-         0h.008v.008H6V10.5z"/>`,
-  },
+  // ── Clínicos ──────────────────────────────────────────
+  { nombre: "CADIT",              descripcion: "Sistema de Consulta y Atención Digital",                     href: "http://produccionsicadit.imss.gob.mx/psp/ps/?&cmd=login&languageCd=ESP&",                                                                                                          categoria: "Clínicos" },
+  { nombre: "ECE - IMSS",         descripcion: "Expediente Clínico Electrónico",                             href: "http://ece.imss.gob.mx/ece/pages/acceso/login.jsf",                                                                                                                             categoria: "Clínicos" },
+  { nombre: "Rayos X",            descripcion: "Sistema de Imágenes Diagnósticas (HisWeb)",                  href: "http://172.27.69.8/HisWeb",                                                                                                                                                     categoria: "Clínicos" },
+  { nombre: "PHEDS",              descripcion: "Sistema Hospitalario de Expediente Digital",                 href: "https://pheds.imss.gob.mx/siah/login.html",                                                                                                                                    categoria: "Clínicos" },
+  { nombre: "PHEDS Prog. QX",     descripcion: "Programación Quirúrgica",                                   href: "https://pheds.imss.gob.mx/sq/",                                                                                                                                                categoria: "Clínicos" },
+  { nombre: "Pasteur",            descripcion: "Sistema de Laboratorio Pasteur",                             href: "http://172.27.69.57:80/",                                                                                                                                                      categoria: "Clínicos" },
+  { nombre: "Winlab",             descripcion: "Sistema de Resultados de Laboratorio",                       href: "http://11.45.22.74/WinlabWeb/ww/login.aspx",                                                                                                                                   categoria: "Clínicos" },
+  { nombre: "RIC",                descripcion: "Registro Institucional de Cáncer",                          href: "http://172.22.235.16/sric/",                                                                                                                                                   categoria: "Clínicos" },
+  { nombre: "CIH",                descripcion: "Centro de Información Hospitalaria",                         href: "http://172.24.249.4/cih",                                                                                                                                                      categoria: "Clínicos" },
+  // ── Administrativos ───────────────────────────────────
+  { nombre: "SAI",                descripcion: "Sistema de Administración Institucional",                    href: "http://sai.imss.gob.mx/",                                                                                                                                                     categoria: "Administrativos" },
+  { nombre: "SIE",                descripcion: "Sistema de Información Estadística",                         href: "http://172.24.249.2/",                                                                                                                                                         categoria: "Administrativos" },
+  { nombre: "PREI",               descripcion: "Presupuesto e Inversión",                                    href: "http://prei.imss.gob.mx/",                                                                                                                                                    categoria: "Administrativos" },
+  { nombre: "PREI 2",             descripcion: "Presupuesto e Inversión — versión 2",                        href: "http://prei.imss.gob.mx/prei2/",                                                                                                                                              categoria: "Administrativos" },
+  { nombre: "Pago de Cuentas",    descripcion: "Consulta y gestión de pago de cuentas",                     href: "http://172.24.81.105/Anexo2/consulta_de_anexo_3list.php",                                                                                                                     categoria: "Administrativos" },
+  { nombre: "Tarjetón Digital",   descripcion: "Consulta de tarjetón digital del personal",                 href: "http://rh.imss.gob.mx/TarjetonDigital/",                                                                                                                                      categoria: "Administrativos" },
+  { nombre: "Biométricos",        descripcion: "Registro y consulta de datos biométricos",                  href: "http://siapportal.imss.gob.mx/biometrico/",                                                                                                                                   categoria: "Administrativos" },
+  { nombre: "CVOED",              descripcion: "Control y Validación de Operaciones",                        href: "http://cvoed.imss.gob.mx/",                                                                                                                                                   categoria: "Administrativos" },
+  { nombre: "MAAGTIC-SI",         descripcion: "Sistema de Gestión de TIC",                                  href: "http://maagtic/Maagticsi/index.html",                                                                                                                                          categoria: "Administrativos" },
+  // ── Información ───────────────────────────────────────
+  { nombre: "Digitalización Nacional", descripcion: "Sistema de Digitalización de Documentos",              href: "http://172.25.0.97:8080/2023/DigitalizacionUrls/index.php",                                                                                                                   categoria: "Información" },
+  { nombre: "Acceder Unificado",  descripcion: "Acceso unificado a servicios digitales IMSS",               href: "http://ssoadmin.imss.gob.mx/openam_10.0.0/XUI/?realm=ventanilla&goto=http://serviciosdigitalesinterno.imss.gob.mx/gestionDerechohabientes-web/j_spring_security_check",        categoria: "Información" },
+  { nombre: "Intranet",           descripcion: "Red interna de información institucional",                   href: "http://intranet/Paginas/index.aspx",                                                                                                                                          categoria: "Información" },
+  { nombre: "Mejores Prácticas",  descripcion: "Repositorio de mejores prácticas institucionales",          href: "http://intranet:55511/uoc/Paginas/mejorespracticas.aspx",                                                                                                                     categoria: "Información" },
+  { nombre: "COVID-19",           descripcion: "Información familiar COVID-19",                              href: "https://infofamiliarcovid.imss.gob.mx/infcovid-web/login",                                                                                                                    categoria: "Información" },
+  // ── IMSS General ──────────────────────────────────────
+  { nombre: "Portal IMSS",        descripcion: "Sitio oficial del Instituto Mexicano del Seguro Social",    href: "http://www.imss.gob.mx/Pages/index.aspx",                                                                                                                                     categoria: "IMSS General" },
+  { nombre: "Transparencia IMSS", descripcion: "Portal de Transparencia del IMSS",                          href: "http://transparencia.imss.gob.mx/",                                                                                                                                           categoria: "IMSS General" },
+  { nombre: "Correo Institucional", descripcion: "Correo electrónico institucional (Webmail)",               href: "https://outlook.office.com/mail",                                                                                                                                              categoria: "IMSS General" },
+  { nombre: "Guías de Práctica Clínica", descripcion: "Guías clínicas para profesionales de salud",        href: "http://www.imss.gob.mx/profesionales-salud/gpc",                                                                                                                              categoria: "IMSS General" },
 ];
+
+const categorias = ["Clínicos", "Administrativos", "Información", "IMSS General"];
 ---
 
 <Layout title="Sistemas institucionales">
@@ -80,35 +49,45 @@ const sistemas = [
     <p class="mt-2" style="opacity:0.8">Acceso directo a los sistemas del IMSS</p>
   </section>
 
-  <!-- Grid de sistemas -->
+  <!-- Grid de sistemas agrupados por categoría -->
   <section class="bg-white py-16 px-4">
     <div class="max-w-5xl mx-auto">
       <p class="text-gray-600 mb-10 max-w-2xl">
-        Accede a los sistemas institucionales del IMSS. Si tienes problemas para ingresar,
-        contacta al área de soporte técnico de tu unidad.
+        Accede a los sistemas institucionales del IMSS y del hospital.
+        Los sistemas con dirección IP interna (172.x.x.x) solo están
+        disponibles desde la red del hospital.
       </p>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {sistemas.map(({ nombre, descripcion, href, icono }) => (
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener"
-            class="border border-gray-200 rounded-xl p-6 shadow-sm flex flex-col gap-3
-                   hover:shadow-md hover:border-imss-green transition-all"
-          >
-            <div class="flex items-center gap-3">
-              <svg class="w-8 h-8 flex-shrink-0" fill="none" stroke="#006847"
-                viewBox="0 0 24 24" stroke-width="1.5"
-                set:html={icono}
-              />
-              <span class="font-semibold text-gray-800">{nombre}</span>
-            </div>
-            <p class="text-sm text-gray-500 flex-1">{descripcion}</p>
-            <p class="text-sm font-medium" style="color:#006847">Abrir sistema →</p>
-          </a>
-        ))}
-      </div>
+      {categorias.map(cat => (
+        <div>
+          <h2 class="text-lg font-semibold text-gray-700 mb-4 mt-8 pb-2 border-b border-gray-200">
+            <span style="color:#006847" class="mr-2">●</span>{cat}
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {sistemas.filter(s => s.categoria === cat).map(({ nombre, descripcion, href }) => (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener"
+                class="border border-gray-200 rounded-xl p-6 shadow-sm flex flex-col gap-3
+                       hover:shadow-md hover:border-imss-green transition-all"
+              >
+                <div class="flex items-center gap-3">
+                  <svg class="w-8 h-8 flex-shrink-0" fill="none" stroke="#006847"
+                    viewBox="0 0 24 24" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5
+                         A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                  </svg>
+                  <span class="font-semibold text-gray-800">{nombre}</span>
+                </div>
+                <p class="text-sm text-gray-500 flex-1">{descripcion}</p>
+                <p class="text-sm font-medium" style="color:#006847">Abrir sistema →</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   </section>
 

@@ -161,7 +161,7 @@ function renderPanel(departamentos, flashKey) {
       </div>
       <button
         type="button"
-        onclick="if(confirm('¿Cerrar sesión?\\nSerás redirigido al portal de documentos.')) { fetch('/admin/logout', { method: 'POST', credentials: 'include' }).then(() => window.location.href = '/documentos'); }"
+        onclick="openLogoutModal()"
         class="text-sm px-3 py-1.5 rounded-lg transition-colors"
         style="color:rgba(255,255,255,0.85);border:1px solid rgba(255,255,255,0.35)"
         onmouseover="this.style.background='rgba(255,255,255,0.12)'"
@@ -226,11 +226,60 @@ function renderPanel(departamentos, flashKey) {
     </div>
   </main>
 
+  <div id="logout-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center px-4">
+    <div class="absolute inset-0 bg-black/50" onclick="closeLogoutModal()"></div>
+    <div class="relative bg-white rounded-xl shadow-xl max-w-sm w-full p-6">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center"
+          style="background:#fef2f2">
+          <svg class="w-5 h-5" fill="none" stroke="#dc2626" viewBox="0 0 24 24" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25
+                 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15
+                 m3 0l3-3m0 0l-3-3m3 3H9"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-800">Cerrar sesión</h3>
+      </div>
+      <p class="text-sm text-gray-500 mb-6">
+        Vas a salir del panel de administración. Serás redirigido
+        al portal de documentos públicos.
+      </p>
+      <div class="flex gap-3 justify-end">
+        <button type="button" onclick="closeLogoutModal()"
+          class="text-sm font-medium px-4 py-2 rounded-lg text-gray-600
+                 border border-gray-300 hover:bg-gray-50 transition-colors">
+          Cancelar
+        </button>
+        <button type="button" onclick="confirmLogout()"
+          class="text-sm font-medium px-4 py-2 rounded-lg text-white transition-colors"
+          style="background:#dc2626"
+          onmouseover="this.style.background='#b91c1c'"
+          onmouseout="this.style.background='#dc2626'">
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     function confirmDelete(id, name) {
       if (confirm('\\u00bfEliminar "' + name + '"?\\nEsta acci\\u00f3n no se puede deshacer.')) {
         document.getElementById('del-' + id).submit();
       }
+    }
+
+    function openLogoutModal() {
+      document.getElementById('logout-modal').classList.remove('hidden');
+    }
+
+    function closeLogoutModal() {
+      document.getElementById('logout-modal').classList.add('hidden');
+    }
+
+    function confirmLogout() {
+      fetch('/admin/logout', { method: 'POST', credentials: 'include' })
+        .then(() => window.location.href = '/documentos');
     }
   </script>
 </body>

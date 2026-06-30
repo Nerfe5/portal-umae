@@ -5,35 +5,64 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Inicio">
 
   <!-- SECCIÓN 1: Hero -->
-  <section class="py-20 px-4 text-center text-white" style="background:#006847">
-    <p class="text-sm uppercase tracking-widest" style="opacity:0.75">
-      Instituto Mexicano del Seguro Social
-    </p>
-    <h1 class="text-4xl md:text-5xl font-bold mt-2">
-      UMAE Hospital de Especialidades
-    </h1>
-    <p class="text-xl md:text-2xl mt-3" style="opacity:0.8">
-      Puebla, México
-    </p>
-    <p class="text-base mt-6 max-w-2xl mx-auto" style="opacity:0.7">
-      Portal institucional de información y acceso a servicios
-      del UMAE Hospital de Especialidades IMSS Puebla.
-    </p>
-    <div class="mt-8 flex justify-center flex-wrap gap-4">
-      <a
-        href="/documentos"
-        class="bg-white font-semibold px-6 py-3 rounded-lg transition-opacity hover:opacity-90"
-        style="color:#006847"
-      >
-        Ver documentos
-      </a>
-      <a
-        href="/contacto"
-        class="border-2 border-white text-white px-6 py-3 rounded-lg transition-colors hover:bg-white/10"
-      >
-        Contacto
-      </a>
+  <section class="relative py-20 px-4 text-center text-white overflow-hidden" style="background:#006847">
+
+    <div class="absolute inset-0 pointer-events-none opacity-20" aria-hidden="true">
+      <svg class="absolute -top-10 -left-10 w-64 h-64 animate-float-slow"
+        viewBox="0 0 200 200" fill="none">
+        <circle cx="100" cy="100" r="80" stroke="white" stroke-width="1.5"/>
+      </svg>
+      <svg class="absolute top-1/4 right-10 w-40 h-40 animate-float-medium"
+        viewBox="0 0 200 200" fill="none">
+        <rect x="40" y="40" width="120" height="120" stroke="white"
+          stroke-width="1.5" transform="rotate(15 100 100)"/>
+      </svg>
+      <svg class="absolute bottom-10 left-1/4 w-32 h-32 animate-float-fast"
+        viewBox="0 0 200 200" fill="none">
+        <polygon points="100,20 180,170 20,170" stroke="white" stroke-width="1.5"/>
+      </svg>
+      <svg class="absolute bottom-1/3 right-1/4 w-24 h-24 animate-float-slow"
+        viewBox="0 0 200 200" fill="none">
+        <circle cx="100" cy="100" r="60" stroke="white" stroke-width="1.5"/>
+      </svg>
+      <svg class="absolute top-10 right-1/3 w-20 h-20 animate-float-medium"
+        viewBox="0 0 200 200" fill="none">
+        <rect x="50" y="50" width="100" height="100" stroke="white"
+          stroke-width="1.5" transform="rotate(45 100 100)"/>
+      </svg>
     </div>
+
+    <div class="relative z-10">
+      <p class="text-sm uppercase tracking-widest" style="opacity:0.75">
+        Instituto Mexicano del Seguro Social
+      </p>
+      <h1 class="text-4xl md:text-5xl font-bold mt-2">
+        UMAE Hospital de Especialidades
+      </h1>
+      <p class="text-xl md:text-2xl mt-3" style="opacity:0.8">
+        Puebla, México
+      </p>
+      <p class="text-base mt-6 max-w-2xl mx-auto" style="opacity:0.7">
+        Portal institucional de información y acceso a servicios
+        del UMAE Hospital de Especialidades IMSS Puebla.
+      </p>
+      <div class="mt-8 flex justify-center flex-wrap gap-4">
+        <a
+          href="/documentos"
+          class="bg-white font-semibold px-6 py-3 rounded-lg transition-opacity hover:opacity-90"
+          style="color:#006847"
+        >
+          Ver documentos
+        </a>
+        <a
+          href="/contacto"
+          class="border-2 border-white text-white px-6 py-3 rounded-lg transition-colors hover:bg-white/10"
+        >
+          Contacto
+        </a>
+      </div>
+    </div>
+
   </section>
 
   <!-- SECCIÓN 2: Accesos rápidos -->
@@ -140,3 +169,34 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
 </Layout>
+
+<style>
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+  }
+  @keyframes float-medium {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(-8deg); }
+  }
+  @keyframes float-fast {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(10deg); }
+  }
+  .animate-float-slow {
+    animation: float-slow 8s ease-in-out infinite;
+  }
+  .animate-float-medium {
+    animation: float-medium 6s ease-in-out infinite;
+  }
+  .animate-float-fast {
+    animation: float-fast 5s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float-slow,
+    .animate-float-medium,
+    .animate-float-fast {
+      animation: none;
+    }
+  }
+</style>
